@@ -114,7 +114,7 @@ class Material(db.Model):
     name = db.Column(db.String(25), nullable=False)
     details = db.Column(db.String(500), nullable=False)
 
-    user = db.relationship("User", backref=db.backref("tasks"))
+    user = db.relationship("User", backref=db.backref("materials"))
 
     def __repr__(self):
         """Provide helpful representation when printed."""
