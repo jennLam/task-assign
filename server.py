@@ -6,7 +6,7 @@ from functools import wraps
 
 app = Flask(__name__)
 
-app.secret_key = "ABC123"
+app.secret_key = os.environ.get("FLASK_SECRET_KEY")
 
 app.jinja_env.undefined = StrictUndefined
 
