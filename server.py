@@ -101,7 +101,11 @@ def process_login():
 def show_user_page(user_id):
     """Show user's homepage."""
 
-    return render_template("home.html", user=g.current_user)
+    if user_id == str(g.user_id):
+        return render_template("home.html", user=g.current_user)
+    else:
+        flash("Incorrect user.", "warning")
+        return redirect("/user/" + str(session["user_id"]))
 
 
 @app.route("/logout")

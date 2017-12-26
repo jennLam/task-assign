@@ -7,3 +7,9 @@
   background-color: #f8f8f8;
   border: 0px solid red;
 }
+
+.alert {
+    width: 70%;
+    margin: auto;
+
+}

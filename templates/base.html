@@ -95,11 +95,18 @@
       </div>
     </div>
 
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+
+        <div class="alert alert-{{ category }}">
+          <strong>{{ category|capitalize }}!</strong> {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
 
 
-  {% for message in get_flashed_messages() %}
-    {{ message }}
-  {% endfor %}
 
   {% block content %}
     put your content here
