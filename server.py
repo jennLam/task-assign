@@ -104,6 +104,16 @@ def show_user_page(user_id):
     return render_template("home.html", user=g.current_user)
 
 
+@app.route("/logout")
+@login_required
+def process_logout():
+    """Process logout."""
+
+    session.clear()
+
+    return redirect("/")
+
+
 if __name__ == "__main__":
 
     app.debug = True
