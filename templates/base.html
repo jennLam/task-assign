@@ -25,14 +25,22 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">Page 1</a></li>
-            <li><a href="#">Page 2</a></li> 
-            <li><a href="#">Page 3</a></li> 
+
           </ul>
+        
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            {% if session.get("user_name") %}
+              <li><a href="#">Welcome {{ session["user_name"] }}!</a></li>
+            {% else %}
+              <li><a href="#" data-toggle="modal" data-target="#registerForm">Register</a></li>
+            {% endif %}
+
+            {% if session.get("user_id") %}
+              <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> LOGOUT</a></li>
+            {% else %}
+              <li><a href="#" data-toggle="modal" data-target="#loginForm">Login</a></li>
+            {% endif %}
+          
           </ul>
         </div>
       </div>
