@@ -1,9 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
 
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+
+        <div class="alert alert-{{ category }}">
+          <strong>{{ category|capitalize }}!</strong> {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
 
 
-
-  hello!
+  <div>
+    blah blabh
+  </div>
 
 {% endblock %}

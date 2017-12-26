@@ -1,5 +1,13 @@
+.container {
+margin: 0;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+}
+
 .sidebar {
-  width: 18%;
+  width: 100%;
   float: left;
   padding: 10px;
   margin-left: 3%;
@@ -8,8 +16,16 @@
   border: 0px solid red;
 }
 
+.main {
+  width: 100%;
+  float: right;
+  padding: 10px;
+  margin-left: 30%;
+  margin-right: 3%;
+  background-color: #f8f8f8;
+  border: 0px solid red;
+}
 .alert {
-    width: 70%;
-    margin: auto;
+    width: 100%;
 
 }

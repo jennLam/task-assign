@@ -50,8 +50,11 @@
       </div>
     </nav>
 
+    <div class="row">
+
 
   {% if session.get("user_id") %}
+  <div class="col-sm-3">
     <div class="sidebar">
       <h4 class="header"><span class="glyphicon glyphicon-calendar"></span> TASKS
         <a href class="badge pull-right" data-toggle="modal" data-target="#addTask">+</a>
@@ -62,10 +65,21 @@
       hello
 
     </div>
+  </div>
+  <div class="col-sm-9">
+
+    <div class="main">
+
+      {% block content %}
+        put your content here
+      {% endblock %}
+    </div>
+  </div>
 
 
 
   {% endif %}
+</div>
 
   <div id="addTask" class="modal fade" role="dialog">
       <div class="modal-dialog">
@@ -95,22 +109,10 @@
       </div>
     </div>
 
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      {% for category, message in messages %}
-
-        <div class="alert alert-{{ category }}">
-          <strong>{{ category|capitalize }}!</strong> {{ message }}
-        </div>
-      {% endfor %}
-    {% endif %}
-  {% endwith %}
 
 
 
-  {% block content %}
-    put your content here
-  {% endblock %}
+
 
 
   </body>
