@@ -48,6 +48,26 @@ def show_register_form():
     return render_template("register.html")
 
 
+def add_to_database(item):
+    """Add item to the database."""
+
+    db.session.add(item)
+    db.session.commit()
+
+
+def check_and_add(existing_item, item):
+    """Check if an item already exists in the database and adds it if it doesn't."""
+
+    # Check if it exists
+    if existing_item:
+        flash(item.__class__.__name__ + " already exists.", "danger")
+        return
+    # If not, add to database
+    else:
+        add_to_database(item)
+        flash(item.__class__.__name__ + " successfully added.", "success")
+
+
 @app.route("/register", methods=["POST"])
 def process_register_info():
     """Get registration form information."""
@@ -106,6 +126,31 @@ def show_user_page(user_id):
     else:
         flash("Incorrect user.", "warning")
         return redirect("/user/" + str(session["user_id"]))
+
+
+@app.route("/add-task", methods=["POST"])
+def add_task():
+    """Add task to database."""
+
+    task = request.form.get("task")
+    details = request.form.get("details")
+
+    print task, details
+
+    existing_task = Task.query.filter_by(name=task).first()
+
+    new_task = Task(name=task, details=details)
+
+    check_and_add(existing_task, new_task)
+
+    return redirect(request.referrer)
+
+
+@app.route("/show-task-form")
+def show_task_form():
+    """Show task form."""
+
+    return render_template("task.html")
 
 
 @app.route("/logout")

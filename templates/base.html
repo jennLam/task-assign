@@ -63,7 +63,7 @@
     <div class="col-sm-3 col-lg-3">
       <div class="sidebar">
         <h4 class="header"><span class="glyphicon glyphicon-calendar"></span> TASKS
-          <a href class="badge pull-right" data-toggle="modal" data-target="#addTask">+</a>
+          <a href="/show-task-form" class="badge pull-right">+</a>
         </h4>
         <hr>
 
@@ -75,6 +75,16 @@
     <div class="col-sm-9 col-lg-9">
 
       <div class="main">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+
+              <div class="alert alert-{{ category }}">
+                <strong>{{ category|capitalize }}!</strong> {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
 
         {% block content %}
           put your content here
@@ -88,7 +98,7 @@
   </div>
 </div>
 
-  <div id="addTask" class="modal fade" role="dialog">
+  <div id="addTasks" class="modal fade" role="dialog">
       <div class="modal-dialog">
 
         <!-- Modal content-->
@@ -98,11 +108,11 @@
             <h4 class="modal-title">Add Task</h4>
           </div>
           <div class="modal-body">
-            <form action="/add-event" method="POST">
-              Contact: <select name="contact_id">
+            <form action="/add-task" method="POST">
+              Task: <select name="task_name">
 
               </select><br/>
-              Event Name: <input type="text" name="ename"><br/>
+              Technician: <input type="text" name="ename"><br/>
               Date: <input type="date" name="date"><br/>
               <input type="submit" value="Add">
             </form>
