@@ -178,6 +178,30 @@ def add_tech():
     return redirect(request.referrer)
 
 
+@app.route("/show-equip-form")
+def show_equip_form():
+    """Show equipment form."""
+
+    return render_template("equip.html")
+
+
+@app.route("add-equip", methods=["POST"])
+def add_equip():
+    """Add equipment to database."""
+
+    name = request.form.get("name")
+    ein = request.form.get("ein")
+    eq_type = request.form.get("type")
+
+    existing_equip = Equipment.query.filter_by(name=name).first()
+
+    new_equip = Equipment(name=name, ein=ein, eq_type=eq_type)
+
+    check_and_add(existing_equip, new_equip)
+
+    return redirect(request.referrer)
+
+
 @app.route("/logout")
 @login_required
 def process_logout():

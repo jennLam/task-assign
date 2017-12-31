@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container-fluid">
+  <h4>Add New Equipment</h4>
+
+  <form action="/add-equip" method="POST">
+
+    <div class="form-group">
+      <label for="type">Equipment Type:</label>
+      <input type="text" class="form-control" name="type" placeholder="Enter equipment type" required>
+    </div>
+
+    <div class="form-group">
+      <label for="task">Equipment Name:</label>
+      <input type="text" class="form-control" name="name" placeholder="Enter equipment name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="ein">EIN:</label>
+      <input type="number" class="form-control" min="0" max="9999999" name="ein" placeholder="Enter ein" required>
+    </div>
+    
+    <div class="form-group"> 
+      <button type="submit" class="btn btn-default">Submit</button>
+    </div>
+  </form>
+
+</div>
+
+{% endblock %}

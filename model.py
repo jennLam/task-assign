@@ -34,7 +34,7 @@ class Technician(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(100), nullable=False)
-    phone_number = db.Column(db.Integer, nullable=False)
+    phone_number = db.Column(db.String(25), nullable=False)
     start_date = db.Column(db.DateTime, nullable=False)
 
     user = db.relationship("User", backref=db.backref("technicians"))
