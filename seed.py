@@ -1,5 +1,6 @@
 from sqlalchemy import func
-from model import User, Technician, Equipment, Task, Status, Material, TechnicianTask, TaskEquipment, TaskMaterial, connect_to_db, db
+from model import User, Technician, Equipment, Task, Status
+from model import connect_to_db, db
 from server import app
 from datetime import datetime
 from update_pkey_seqs import update_pkey_seqs

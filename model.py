@@ -196,7 +196,7 @@ class AssignmentTask(db.Model):
     task_id = db.Column(db.Integer, db.ForeignKey("tasks.task_id"))
     assignment_id = db.Column(db.Integer, db.ForeignKey("assignments.assignment_id"))
 
-    material = db.relationship("Material", backref=db.backref("assigntasks"))
+    task = db.relationship("Task", backref=db.backref("assigntasks"))
     assignment = db.relationship("Assignment", backref=db.backref("assigntasks"))
 
     def __repr__(self):
