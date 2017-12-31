@@ -34,10 +34,27 @@ def load_techs():
 
     db.session.commit()
 
+
+def load_equips():
+    """Load equipments from equip_data into database."""
+
+    for line in open("seed_data/equip_data"):
+        line = line.rstrip()
+        equip_id, user_id, name, ein, eq_type = line.split(",")
+
+        equip = Equipment(equip_id=equip_id, user_id=user_id, name=name,
+                          ein=ein, eq_type=eq_type)
+
+        db.session.add(equip)
+
+    db.session.commit()
+
+
 if __name__ == "__main__":
     connect_to_db(app)
 
     db.create_all()
     load_users()
     load_techs()
+    load_equips()
     update_pkey_seqs()
