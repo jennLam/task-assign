@@ -76,12 +76,12 @@ class Task(db.Model):
 
     task_id = db.Column(db.Integer, autoincrement=True, nullable=False, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-    status_id = db.Column(db.Integer, db.ForeignKey("statuses.status_id"))
+    # status_id = db.Column(db.Integer, db.ForeignKey("statuses.status_id"))
     name = db.Column(db.String(25), nullable=False)
     details = db.Column(db.String(500), nullable=False)
 
     user = db.relationship("User", backref=db.backref("tasks"))
-    status = db.relationship("Status", backref=db.backref("tasks"))
+    # status = db.relationship("Status", backref=db.backref("tasks"))
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -96,7 +96,10 @@ class Status(db.Model):
     __tablename__ = "statuses"
 
     status_id = db.Column(db.Integer, autoincrement=True, nullable=False, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     name = db.Column(db.String(50), nullable=False)
+
+    user = db.relationship("User", backref=db.backref("statuses"))
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -125,61 +128,82 @@ class Material(db.Model):
         return s % (self.material_id, self.user_id, self.name, self.details)
 
 
-class TechnicianTask(db.Model):
-    """TechnicianTask model."""
+class Assignment(db.Model):
+    """Assignment model."""
 
-    __tablename__ = "techniciantasks"
+    __tablename__ = "assignments"
 
-    techtask_id = db.Column(db.Integer, autoincrement=True, nullable=False, primary_key=True)
+    assignment_id = db.Column(db.Integer, autoincrement=True, nullable=False, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    status_id = db.Column(db.Integer, db.ForeignKey("statuses.status_id"))
+    name = db.Column(db.String(25), nullable=False)
+    details = db.Column(db.String(500), nullable=False)
+
+    user = db.relationship("User", backref=db.backref("assignments"))
+    status = db.relationship("Status", backref=db.backref("assignments"))
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        s = "<Assignment assignment_id=%s user_id=%s status_id=%s name=%s details=%s>"
+        return s % (self.assignment_id, self.user_id, self.status_id, self.name, self.details)
+
+
+class AssignmentTechnician(db.Model):
+    """AssignmentTechnician model."""
+
+    __tablename__ = "assigntechs"
+
+    assigntech_id = db.Column(db.Integer, autoincrement=True, nullable=False, primary_key=True)
     tech_id = db.Column(db.Integer, db.ForeignKey("technicians.tech_id"))
-    task_id = db.Column(db.Integer, db.ForeignKey("tasks.task_id"))
+    assignment_id = db.Column(db.Integer, db.ForeignKey("assignments.assignment_id"))
 
-    technician = db.relationship("Technician", backref=db.backref("techniciantasks"))
-    task = db.relationship("Task", backref=db.backref("techniciantasks"))
+    technician = db.relationship("Technician", backref=db.backref("assigntechs"))
+    assignment = db.relationship("Assignment", backref=db.backref("assigntechs"))
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        s = "<TechnicianTask techtask_id=%s tech_id=%s task_id=%s>"
-        return s % (self.techtask_id, self.tech_id, self.task_id)
+        s = "<AssignmentTechnician assigntech_id=%s tech_id=%s assignment_id=%s>"
+        return s % (self.assigntech_id, self.tech_id, self.assignment_id)
 
 
-class TaskEquipment(db.Model):
-    """TaskEquipment model."""
+class AssignmentEquipment(db.Model):
+    """AssignmentEquipment model."""
 
-    __tablename__ = "taskequipments"
+    __tablename__ = "assignequips"
 
-    taskequip_id = db.Column(db.Integer, autoincrement=True, nullable=False, primary_key=True)
+    assignequip_id = db.Column(db.Integer, autoincrement=True, nullable=False, primary_key=True)
     equip_id = db.Column(db.Integer, db.ForeignKey("equipments.equip_id"))
-    task_id = db.Column(db.Integer, db.ForeignKey("tasks.task_id"))
+    assignment_id = db.Column(db.Integer, db.ForeignKey("assignments.assignment_id"))
 
-    equipment = db.relationship("Equipment", backref=db.backref("taskequipments"))
-    task = db.relationship("Task", backref=db.backref("taskequipments"))
-
-    def __repr__(self):
-        """Provide helpful representation when printed."""
-
-        s = "<TaskEquipment taskequip_id=%s equip_id=%s task_id=%s>"
-        return s % (self.taskequip_id, self.equip_id, self.task_id)
-
-
-class TaskMaterial(db.Model):
-    """TaskMaterial model."""
-
-    __tablename__ = "taskmaterials"
-
-    taskmaterial_id = db.Column(db.Integer, autoincrement=True, nullable=False, primary_key=True)
-    material_id = db.Column(db.Integer, db.ForeignKey("materials.material_id"))
-    task_id = db.Column(db.Integer, db.ForeignKey("tasks.task_id"))
-
-    material = db.relationship("Material", backref=db.backref("taskmaterials"))
-    task = db.relationship("Task", backref=db.backref("taskmaterials"))
+    equipment = db.relationship("Equipment", backref=db.backref("assignequips"))
+    assignment = db.relationship("Assignment", backref=db.backref("assignequips"))
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        s = "<TaskMaterial taskmaterial_id=%s material_id=%s task_id=%s>"
-        return s % (self.taskmaterial_id, self.material_id, self.task_id)
+        s = "<AssignmentEquipment assignequip_id=%s equip_id=%s assignment_id=%s>"
+        return s % (self.assignequip_id, self.equip_id, self.assignment_id)
+
+
+class AssignmentTask(db.Model):
+    """AssignmentTask model."""
+
+    __tablename__ = "assigntasks"
+
+    assigntask_id = db.Column(db.Integer, autoincrement=True, nullable=False, primary_key=True)
+    task_id = db.Column(db.Integer, db.ForeignKey("tasks.task_id"))
+    assignment_id = db.Column(db.Integer, db.ForeignKey("assignments.assignment_id"))
+
+    material = db.relationship("Material", backref=db.backref("assigntasks"))
+    assignment = db.relationship("Assignment", backref=db.backref("assigntasks"))
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        s = "<AssignmentTask assigntask_id=%s task_id=%s assignment_id=%s>"
+        return s % (self.assigntask_id, self.task_id, self.assignment_id)
 
 
 def init_app():

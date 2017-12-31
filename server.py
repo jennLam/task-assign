@@ -1,7 +1,8 @@
 from flask import Flask, render_template, redirect, request, flash, session, g, url_for
 from flask_debugtoolbar import DebugToolbarExtension
 from jinja2 import StrictUndefined
-from model import User, Technician, Equipment, Task, Status, Material, TechnicianTask, TaskEquipment, TaskMaterial, connect_to_db, db
+from model import User, Technician, Equipment, Task, Status
+from model import connect_to_db, db
 from functools import wraps
 import os
 from helper import check_and_add

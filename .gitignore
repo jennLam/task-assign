@@ -1,4 +1,4 @@
 env/
-client_secret.json
 *.pyc
 secrets.sh
+client_secret.json

@@ -1,4 +1,4 @@
-from model import User, Technician, Equipment, Task, Status, Material, TechnicianTask, TaskEquipment, db
+from model import db, User, Technician, Equipment, Task, Status
 from flask import flash
 
 
