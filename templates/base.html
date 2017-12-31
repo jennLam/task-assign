@@ -78,9 +78,21 @@
         </h4>
         <hr>
 
+        {% for tech in g.current_user.technicians %}
+          {{ tech.name }}
+        {% endfor %}
+
+        <hr>
+
         <h4 class="header"><span class="glyphicon glyphicon-calendar"></span> EQUIPMENT
           <a href="/show-equip-form" class="badge pull-right">+</a>
         </h4>
+        <hr>
+
+        {% for equip in g.current_user.equipments %}
+          {{ equip.name }}
+        {% endfor %}
+
         <hr>
 
       </div>

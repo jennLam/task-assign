@@ -15,8 +15,22 @@ def load_users():
         user = User(user_id=user_id, fname=fname, lname=lname, username=username,
                     email=email, password=password, notification=notification)
 
-        # We need to add to the session or it won't be stored
         db.session.add(user)
+
+    db.session.commit()
+
+
+def load_techs():
+    """Load technicians from tech_data into database."""
+
+    for line in open("seed_data/tech_data"):
+        line = line.rstrip()
+        tech_id, user_id, name, email, phone_number, start_date = line.split(",")
+
+        tech = Technician(tech_id=tech_id, user_id=user_id, name=name,
+                          email=email, phone_number=phone_number, start_date=start_date)
+
+        db.session.add(tech)
 
     db.session.commit()
 
@@ -25,4 +39,5 @@ if __name__ == "__main__":
 
     db.create_all()
     load_users()
+    load_techs()
     update_pkey_seqs()
