@@ -67,8 +67,10 @@
         </h4>
         <hr>
 
-        hello
-        hello
+        {% for task in g.current_user.tasks %}
+          {{ task.name }}
+        {% endfor %}
+
         <hr>
 
         <h4 class="header"><span class="glyphicon glyphicon-calendar"></span> TECHNICIAN

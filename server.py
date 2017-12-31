@@ -4,6 +4,8 @@ from jinja2 import StrictUndefined
 from model import User, Technician, Equipment, Task, Status, Material, TechnicianTask, TaskEquipment, TaskMaterial, connect_to_db, db
 from functools import wraps
 import os
+from helper import check_and_add
+
 
 app = Flask(__name__)
 
@@ -46,26 +48,6 @@ def index():
 def show_register_form():
 
     return render_template("register.html")
-
-
-def add_to_database(item):
-    """Add item to the database."""
-
-    db.session.add(item)
-    db.session.commit()
-
-
-def check_and_add(existing_item, item):
-    """Check if an item already exists in the database and adds it if it doesn't."""
-
-    # Check if it exists
-    if existing_item:
-        flash(item.__class__.__name__ + " already exists.", "danger")
-        return
-    # If not, add to database
-    else:
-        add_to_database(item)
-        flash(item.__class__.__name__ + " successfully added.", "success")
 
 
 @app.route("/register", methods=["POST"])
@@ -144,9 +126,9 @@ def add_task():
 
     print task, details
 
-    existing_task = Task.query.filter_by(name=task).first()
+    existing_task = Task.query.filter_by(user_id=g.user_id, name=task).first()
 
-    new_task = Task(name=task, details=details)
+    new_task = Task(user_id=g.user_id, name=task, details=details)
 
     check_and_add(existing_task, new_task)
 
@@ -185,7 +167,7 @@ def show_equip_form():
     return render_template("equip.html")
 
 
-@app.route("add-equip", methods=["POST"])
+@app.route("/add-equip", methods=["POST"])
 def add_equip():
     """Add equipment to database."""
 
