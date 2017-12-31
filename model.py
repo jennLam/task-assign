@@ -68,6 +68,7 @@ class Equipment(db.Model):
         return s % (self.equip_id, self.user_id, self.status_id, self.name, self.ein, self.eq_type)
 
 
+#remove status as foreign key to task
 class Task(db.Model):
     """Task model."""
 
@@ -103,7 +104,8 @@ class Status(db.Model):
         s = "<Status status_id=%s name=%s>"
         return s % (self.status_id, self.name)
 
-
+#class probably unnecessary, remove material, add all materials in task description
+#keep for future when more complex
 class Material(db.Model):
     """Material model."""
 

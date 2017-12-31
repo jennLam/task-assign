@@ -39,7 +39,7 @@ def index():
     """Homepage."""
 
     if g.user_id:
-        return redirect("/user/" + str(g.user_id))
+        return render_template("home.html", user=g.current_user)
 
     return render_template("homepage.html")
 
@@ -89,7 +89,7 @@ def process_login():
             session["user_id"] = existing_user.user_id
             session["user_name"] = existing_user.fname
 
-            return redirect("/user/" + str(session["user_id"]))
+            return redirect("/")
         else:
             flash("Incorrect password.")
     else:
@@ -98,19 +98,8 @@ def process_login():
     return redirect(request.referrer)
 
 
-@app.route("/user/<user_id>")
-@login_required
-def show_user_page(user_id):
-    """Show user's homepage."""
-
-    if user_id == str(g.user_id):
-        return render_template("home.html", user=g.current_user)
-    else:
-        flash("Incorrect user.", "warning")
-        return redirect("/user/" + str(session["user_id"]))
-
-
 @app.route("/show-task-form")
+@login_required
 def show_task_form():
     """Show task form."""
 
@@ -118,6 +107,7 @@ def show_task_form():
 
 
 @app.route("/add-task", methods=["POST"])
+@login_required
 def add_task():
     """Add task to database."""
 
@@ -136,6 +126,7 @@ def add_task():
 
 
 @app.route("/show-tech-form")
+@login_required
 def show_tech_form():
     """Show technician form."""
 
@@ -143,6 +134,7 @@ def show_tech_form():
 
 
 @app.route("/add-tech", methods=["POST"])
+@login_required
 def add_tech():
     """Add technician to database."""
 
@@ -161,6 +153,7 @@ def add_tech():
 
 
 @app.route("/show-equip-form")
+@login_required
 def show_equip_form():
     """Show equipment form."""
 
@@ -168,6 +161,7 @@ def show_equip_form():
 
 
 @app.route("/add-equip", methods=["POST"])
+@login_required
 def add_equip():
     """Add equipment to database."""
 
