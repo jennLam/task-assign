@@ -128,6 +128,13 @@ def show_user_page(user_id):
         return redirect("/user/" + str(session["user_id"]))
 
 
+@app.route("/show-task-form")
+def show_task_form():
+    """Show task form."""
+
+    return render_template("task.html")
+
+
 @app.route("/add-task", methods=["POST"])
 def add_task():
     """Add task to database."""
@@ -146,11 +153,29 @@ def add_task():
     return redirect(request.referrer)
 
 
-@app.route("/show-task-form")
-def show_task_form():
-    """Show task form."""
+@app.route("/show-tech-form")
+def show_tech_form():
+    """Show technician form."""
 
-    return render_template("task.html")
+    return render_template("tech.html")
+
+
+@app.route("/add-tech", methods=["POST"])
+def add_tech():
+    """Add technician to database."""
+
+    name = request.form.get("name")
+    email = request.form.get("email")
+    phone = request.form.get("phone")
+    start = request.form.get("start")
+
+    existing_tech = Technician.query.filter_by(name=name).first()
+
+    new_tech = Technician(name=name, email=email, phone_number=phone, start_date=start)
+
+    check_and_add(existing_tech, new_tech)
+
+    return redirect(request.referrer)
 
 
 @app.route("/logout")
