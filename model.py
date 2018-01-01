@@ -38,6 +38,7 @@ class Technician(db.Model):
     start_date = db.Column(db.DateTime, nullable=False)
 
     user = db.relationship("User", backref=db.backref("technicians"))
+    assignment = db.relationship("Assignment", secondary="assigntechs", backref="technicians")
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -60,6 +61,7 @@ class Equipment(db.Model):
 
     user = db.relationship("User", backref=db.backref("equipments"))
     status = db.relationship("Status", backref=db.backref("equipments"))
+    assignment = db.relationship("Assignment", secondary="assignequips", backref="equipments")
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -80,6 +82,7 @@ class Task(db.Model):
     details = db.Column(db.String(500), nullable=False)
 
     user = db.relationship("User", backref=db.backref("tasks"))
+    assignment = db.relationship("Assignment", secondary="assigntasks", backref="tasks")
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -155,6 +158,7 @@ class Assignment(db.Model):
 
     user = db.relationship("User", backref=db.backref("assignments"))
     assignstat = db.relationship("AssignStatus", backref=db.backref("assignments"))
+
 
     def __repr__(self):
         """Provide helpful representation when printed."""

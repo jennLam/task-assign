@@ -55,7 +55,7 @@ def load_assignstats():
     """Load assignment statuses from assignstat_data into database."""
 
     for line in open("seed_data/assignstat_data"):
-
+        line = line.rstrip()
         assignstat = AssignStatus(name=line)
 
         db.session.add(assignstat)
@@ -70,4 +70,5 @@ if __name__ == "__main__":
     load_users()
     load_techs()
     load_equips()
+    load_assignstats()
     update_pkey_seqs()
