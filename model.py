@@ -76,18 +76,16 @@ class Task(db.Model):
 
     task_id = db.Column(db.Integer, autoincrement=True, nullable=False, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-    # status_id = db.Column(db.Integer, db.ForeignKey("statuses.status_id"))
     name = db.Column(db.String(25), nullable=False)
     details = db.Column(db.String(500), nullable=False)
 
     user = db.relationship("User", backref=db.backref("tasks"))
-    # status = db.relationship("Status", backref=db.backref("tasks"))
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        s = "<Task task_id=%s user_id=%s status_id=%s name=%s details=%s>"
-        return s % (self.task_id, self.user_id, self.status_id, self.name, self.details)
+        s = "<Task task_id=%s user_id=%s name=%s details=%s>"
+        return s % (self.task_id, self.user_id, self.name, self.details)
 
 
 class Status(db.Model):
@@ -153,7 +151,7 @@ class Assignment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     assignstat_id = db.Column(db.Integer, db.ForeignKey("assignstats.assignstat_id"))
     name = db.Column(db.String(25), nullable=False)
-    details = db.Column(db.String(500), nullable=False)
+    details = db.Column(db.String(500))
 
     user = db.relationship("User", backref=db.backref("assignments"))
     assignstat = db.relationship("AssignStatus", backref=db.backref("assignments"))

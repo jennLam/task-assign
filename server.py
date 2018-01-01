@@ -1,11 +1,11 @@
 from flask import Flask, render_template, redirect, request, flash, session, g, url_for
 from flask_debugtoolbar import DebugToolbarExtension
 from jinja2 import StrictUndefined
-from model import User, Technician, Equipment, Task, Status
+from model import User, Technician, Equipment, Task, Status, Assignment, AssignmentTask, AssignmentTechnician, AssignmentEquipment, AssignStatus
 from model import connect_to_db, db
 from functools import wraps
 import os
-from helper import check_and_add
+from helper import check_and_add, add_to_database
 
 
 app = Flask(__name__)
@@ -115,10 +115,36 @@ def add_assign():
     task = request.form.get("task")
     tech = request.form.get("tech")
     equip = request.form.get("equip")
+    details = request.form.get("details")
 
     if task and tech and equip:
-        flash("New assignment created.", "success")
         print task, tech, equip
+
+        task_ob = Task.query.get(task)
+        equip_ob = Equipment.query.get(equip)
+
+        name = task_ob.name + " - " + equip_ob.name
+        tbd_stat = AssignStatus.query.filter_by(name="To Be Done").first()
+
+        new_assign = Assignment(user_id=g.user_id, assignstat_id=tbd_stat.assignstat_id,
+                                name=name, details=details)
+
+        add_to_database(new_assign)
+
+        new_assigntask = AssignmentTask(task_id=task, assignment_id=new_assign.assignment_id)
+
+        add_to_database(new_assigntask)
+
+        new_assigntech = AssignmentTechnician(tech_id=tech, assignment_id=new_assign.assignment_id)
+
+        add_to_database(new_assigntech)
+
+        new_assignequip = AssignmentEquipment(equip_id=equip, assignment_id=new_assign.assignment_id)
+
+        add_to_database(new_assignequip)
+
+        flash("Assignment successfully created.", "success")
+
     else:
         flash("Make sure you have enough resources before creating a new assignment.", "warning")
 
