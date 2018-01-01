@@ -107,6 +107,17 @@
 
         <hr>
 
+        <h4 class="header"><span class="glyphicon glyphicon-calendar"></span> STATUS
+          <a href="/show-status-form" class="badge pull-right">+</a>
+        </h4>
+        <hr>
+
+        {% for status in g.current_user.statuses %}
+          {{ status.name }}<br/>
+        {% endfor %}
+
+        <hr>
+
       </div>
     </div>
     <div class="col-sm-9 col-lg-9">

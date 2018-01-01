@@ -104,13 +104,23 @@ def process_login():
 def show_assign_form():
     """Show assignment form."""
 
-    return render_template("assign.html")
+    return render_template("assign-form.html")
 
 
 @app.route("/add-assign", methods=["POST"])
 @login_required
 def add_assign():
     """Add assignment to database."""
+
+    task = request.form.get("task")
+    tech = request.form.get("tech")
+    equip = request.form.get("equip")
+
+    if task and tech and equip:
+        flash("New assignment created.", "success")
+        print task, tech, equip
+    else:
+        flash("Make sure you have enough resources before creating a new assignment.", "warning")
 
     return redirect(request.referrer)
 
@@ -120,7 +130,7 @@ def add_assign():
 def show_task_form():
     """Show task form."""
 
-    return render_template("task.html")
+    return render_template("task-form.html")
 
 
 @app.route("/add-task", methods=["POST"])
@@ -147,7 +157,7 @@ def add_task():
 def show_tech_form():
     """Show technician form."""
 
-    return render_template("tech.html")
+    return render_template("tech-form.html")
 
 
 @app.route("/add-tech", methods=["POST"])
@@ -174,7 +184,7 @@ def add_tech():
 def show_equip_form():
     """Show equipment form."""
 
-    return render_template("equip.html")
+    return render_template("equip-form.html")
 
 
 @app.route("/add-equip", methods=["POST"])
@@ -191,6 +201,30 @@ def add_equip():
     new_equip = Equipment(name=name, ein=ein, eq_type=eq_type)
 
     check_and_add(existing_equip, new_equip)
+
+    return redirect(request.referrer)
+
+
+@app.route("/show-status-form")
+@login_required
+def show_status_form():
+    """Show status form."""
+
+    return render_template("status-form.html")
+
+
+@app.route("/add-status", methods=["POST"])
+@login_required
+def add_status():
+    """Add status to database."""
+
+    status = request.form.get("status")
+
+    existing_status = Status.query.filter_by(name=status).first()
+
+    new_status = Status(user_id=g.user_id, name=status)
+
+    check_and_add(existing_status, new_status)
 
     return redirect(request.referrer)
 
