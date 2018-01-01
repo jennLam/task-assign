@@ -99,6 +99,22 @@ def process_login():
     return redirect(request.referrer)
 
 
+@app.route("/show-assign-form")
+@login_required
+def show_assign_form():
+    """Show assignment form."""
+
+    return render_template("assign.html")
+
+
+@app.route("/add-assign", methods=["POST"])
+@login_required
+def add_assign():
+    """Add assignment to database."""
+
+    return redirect(request.referrer)
+
+
 @app.route("/show-task-form")
 @login_required
 def show_task_form():
