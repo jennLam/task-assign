@@ -107,6 +107,22 @@ class Status(db.Model):
         s = "<Status status_id=%s name=%s>"
         return s % (self.status_id, self.name)
 
+
+class AssignStatus(db.Model):
+    """AssignStatus model."""
+
+    __tablename__ = "assignstats"
+
+    assignstat_id = db.Column(db.Integer, autoincrement=True, nullable=False, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        s = "<AssignStatus assignstat_id=%s name=%s>"
+        return s % (self.assignstat_id, self.name)
+
+
 #class probably unnecessary, remove material, add all materials in task description
 #keep for future when more complex
 class Material(db.Model):
@@ -135,18 +151,18 @@ class Assignment(db.Model):
 
     assignment_id = db.Column(db.Integer, autoincrement=True, nullable=False, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-    status_id = db.Column(db.Integer, db.ForeignKey("statuses.status_id"))
+    assignstat_id = db.Column(db.Integer, db.ForeignKey("assignstats.assignstat_id"))
     name = db.Column(db.String(25), nullable=False)
     details = db.Column(db.String(500), nullable=False)
 
     user = db.relationship("User", backref=db.backref("assignments"))
-    status = db.relationship("Status", backref=db.backref("assignments"))
+    assignstat = db.relationship("AssignStatus", backref=db.backref("assignments"))
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        s = "<Assignment assignment_id=%s user_id=%s status_id=%s name=%s details=%s>"
-        return s % (self.assignment_id, self.user_id, self.status_id, self.name, self.details)
+        s = "<Assignment assignment_id=%s user_id=%s assignstat_id=%s name=%s details=%s>"
+        return s % (self.assignment_id, self.user_id, self.assignstat_id, self.name, self.details)
 
 
 class AssignmentTechnician(db.Model):

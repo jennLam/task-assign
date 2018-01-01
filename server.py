@@ -172,7 +172,8 @@ def add_tech():
 
     existing_tech = Technician.query.filter_by(name=name).first()
 
-    new_tech = Technician(name=name, email=email, phone_number=phone, start_date=start)
+    new_tech = Technician(user_id=g.user_id, name=name, email=email,
+                          phone_number=phone, start_date=start)
 
     check_and_add(existing_tech, new_tech)
 
@@ -198,7 +199,7 @@ def add_equip():
 
     existing_equip = Equipment.query.filter_by(name=name).first()
 
-    new_equip = Equipment(name=name, ein=ein, eq_type=eq_type)
+    new_equip = Equipment(user_id=g.user_id, name=name, ein=ein, eq_type=eq_type)
 
     check_and_add(existing_equip, new_equip)
 

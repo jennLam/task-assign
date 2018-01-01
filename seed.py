@@ -1,5 +1,5 @@
 from sqlalchemy import func
-from model import User, Technician, Equipment, Task, Status
+from model import User, Technician, Equipment, Task, Status, AssignStatus
 from model import connect_to_db, db
 from server import app
 from datetime import datetime
@@ -47,6 +47,18 @@ def load_equips():
                           ein=ein, eq_type=eq_type)
 
         db.session.add(equip)
+
+    db.session.commit()
+
+
+def load_assignstats():
+    """Load assignment statuses from assignstat_data into database."""
+
+    for line in open("seed_data/assignstat_data"):
+
+        assignstat = AssignStatus(name=line)
+
+        db.session.add(assignstat)
 
     db.session.commit()
 
