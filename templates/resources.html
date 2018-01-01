@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container-fluid">
+  <h4>Manage Resources</h4>
+  <hr>
+
+  <h4 class="header"><span class="glyphicon glyphicon-calendar"></span> TASK
+    <a href="/show-task-form" class="badge pull-right">+</a>
+  </h4>
+  <hr>
+
+  {% for task in g.current_user.tasks %}
+    {{ task.name }}<br/>
+  {% endfor %}
+
+  <hr>
+
+  <h4 class="header"><span class="glyphicon glyphicon-calendar"></span> TECHNICIAN
+    <a href="/show-tech-form" class="badge pull-right">+</a>
+  </h4>
+  <hr>
+
+  {% for tech in g.current_user.technicians %}
+    {{ tech.name }}</br>
+  {% endfor %}
+
+  <hr>
+
+  <h4 class="header"><span class="glyphicon glyphicon-calendar"></span> EQUIPMENT
+    <a href="/show-equip-form" class="badge pull-right">+</a>
+  </h4>
+  <hr>
+
+  {% for equip in g.current_user.equipments %}
+    {{ equip.name }}<br/>
+  {% endfor %}
+
+  <hr>
+
+  <h4 class="header"><span class="glyphicon glyphicon-calendar"></span> STATUS
+    <a href="/show-status-form" class="badge pull-right">+</a>
+  </h4>
+  <hr>
+
+  {% for status in g.current_user.statuses %}
+    {{ status.name }}<br/>
+  {% endfor %}
+
+  <hr>
+
+
+</div>
+
+{% endblock %}

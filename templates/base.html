@@ -29,7 +29,7 @@
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
             <li class="active"><a href="/">Home</a></li>
-            <li><a href="#">Page 1</a></li>
+            <li><a href="/resources">Resources</a></li>
             <li><a href="#">Page 2</a></li> 
             <li><a href="#">Page 3</a></li> 
 
@@ -68,55 +68,11 @@
         </h4>
         <hr>
 
-        {% for assign in g.current_user.assignments %}
-          {{ assign.name }}<br/>
-        {% endfor %}
+        <a href="#">Completed</a><br/>
+        <a href="#">In Progress</a><br/>
+        <a href="#">To Be Done</a>
 
-        <hr>
-
-        <h4 class="header"><span class="glyphicon glyphicon-calendar"></span> TASK
-          <a href="/show-task-form" class="badge pull-right">+</a>
-        </h4>
-        <hr>
-
-        {% for task in g.current_user.tasks %}
-          {{ task.name }}<br/>
-        {% endfor %}
-
-        <hr>
-
-        <h4 class="header"><span class="glyphicon glyphicon-calendar"></span> TECHNICIAN
-          <a href="/show-tech-form" class="badge pull-right">+</a>
-        </h4>
-        <hr>
-
-        {% for tech in g.current_user.technicians %}
-          {{ tech.name }}</br>
-        {% endfor %}
-
-        <hr>
-
-        <h4 class="header"><span class="glyphicon glyphicon-calendar"></span> EQUIPMENT
-          <a href="/show-equip-form" class="badge pull-right">+</a>
-        </h4>
-        <hr>
-
-        {% for equip in g.current_user.equipments %}
-          {{ equip.name }}<br/>
-        {% endfor %}
-
-        <hr>
-
-        <h4 class="header"><span class="glyphicon glyphicon-calendar"></span> STATUS
-          <a href="/show-status-form" class="badge pull-right">+</a>
-        </h4>
-        <hr>
-
-        {% for status in g.current_user.statuses %}
-          {{ status.name }}<br/>
-        {% endfor %}
-
-        <hr>
+        
 
       </div>
     </div>

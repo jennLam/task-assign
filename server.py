@@ -99,6 +99,14 @@ def process_login():
     return redirect(request.referrer)
 
 
+@app.route("/resources")
+@login_required
+def manage_resources():
+    """Show resources page."""
+
+    return render_template("resources.html")
+
+
 @app.route("/show-assign-form")
 @login_required
 def show_assign_form():
@@ -123,7 +131,7 @@ def add_assign():
         task_ob = Task.query.get(task)
         equip_ob = Equipment.query.get(equip)
 
-        name = task_ob.name + " - " + equip_ob.name
+        name = task_ob.name + " (" + equip_ob.name + ")"
         tbd_stat = AssignStatus.query.filter_by(name="To Be Done").first()
 
         new_assign = Assignment(user_id=g.user_id, assignstat_id=tbd_stat.assignstat_id,
@@ -133,14 +141,12 @@ def add_assign():
 
         new_assigntask = AssignmentTask(task_id=task, assignment_id=new_assign.assignment_id)
 
-        add_to_database(new_assigntask)
-
         new_assigntech = AssignmentTechnician(tech_id=tech, assignment_id=new_assign.assignment_id)
-
-        add_to_database(new_assigntech)
 
         new_assignequip = AssignmentEquipment(equip_id=equip, assignment_id=new_assign.assignment_id)
 
+        add_to_database(new_assigntask)
+        add_to_database(new_assigntech)
         add_to_database(new_assignequip)
 
         flash("Assignment successfully created.", "success")
