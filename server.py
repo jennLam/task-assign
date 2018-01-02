@@ -107,6 +107,27 @@ def manage_resources():
     return render_template("resources.html")
 
 
+@app.route("/assign")
+@login_required
+def show_assign():
+    """Show assignments page."""
+
+    completed_stat = AssignStatus.query.filter_by(name="Completed").first()
+    ip_stat = AssignStatus.query.filter_by(name="In Progress").first()
+    tbd_stat = AssignStatus.query.filter_by(name="To Be Done").first()
+
+    completed = Assignment.query.filter_by(user_id=g.user_id,
+                                           assignstat_id=completed_stat.assignstat_id).all()
+
+    ip = Assignment.query.filter_by(user_id=g.user_id,
+                                    assignstat_id=ip_stat.assignstat_id).all()
+
+    tbd = Assignment.query.filter_by(user_id=g.user_id,
+                                     assignstat_id=tbd_stat.assignstat_id).all()
+
+    return render_template("assign.html", completed=completed, ip=ip, tbd=tbd)
+
+
 @app.route("/show-assign-form")
 @login_required
 def show_assign_form():
