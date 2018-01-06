@@ -29,9 +29,7 @@
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
             <li class="active"><a href="/">Home</a></li>
-            <li><a href="/resources">Resources</a></li>
-            <li><a href="#">Page 2</a></li> 
-            <li><a href="#">Page 3</a></li> 
+
 
           </ul>
         
@@ -60,75 +58,134 @@
 
 
     {% if session.get("user_id") %}
-    <div class="col-sm-3 col-lg-3">
-      <div class="sidebar">
 
-        <h4 class="header"><span class="glyphicon glyphicon-calendar"></span> <a href="/assign">ASSIGNMENT</a>
-          <a href="/show-assign-form" class="badge pull-right">+</a>
-        </h4>
-        <hr>
+    <div class="container-fluid">
+        <div class="row content">
+  
 
-        <a href="#">Completed</a><br/>
-        <a href="#">In Progress</a><br/>
-        <a href="#">To Be Done</a>
-
+    
+    <div class="col-sm-8">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="box">
+            <h4 class="header"><span class="glyphicon glyphicon-calendar"></span> ASSIGNMENT
+            <a href="/show-assign-form" class="badge pull-right">+</a>
+            </h4>
+            <hr>
+            <div class="list">
+              <a href="#">Completed</a><br/>
+              <a href="#">In Progress</a><br/>
+              <a href="#">To Be Done</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="box">
+            <p>Text</p> 
+            <p>Text</p> 
+            <p>Text</p> 
+          </div>
+        </div>
         
+      </div>
 
+      <br/>
+
+
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="box">
+            <h4 class="header"><span class="glyphicon glyphicon-calendar"></span> TASK
+              <a href="/show-task-form" class="badge pull-right">+</a>
+            </h4>
+            <hr>
+            <div class="list">
+              {% for task in g.current_user.tasks %}
+                {{ task.name }} <br/>
+              {% endfor%}
+            </div>
+
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="box">
+            <h4 class="header"><span class="glyphicon glyphicon-calendar"></span> TECHNICIAN
+              <a href="/show-tech-form" class="badge pull-right">+</a>
+            </h4>
+            <hr>
+            <div class="list">
+              {% for tech in g.current_user.technicians %}
+                {{ tech.name }}</br>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="box">
+            <h4 class="header"><span class="glyphicon glyphicon-calendar"></span> EQUIPMENT
+              <a href="/show-equip-form" class="badge pull-right">+</a>
+            </h4>
+            <hr>
+            <div class="list">
+              {% for equip in g.current_user.equipments %}
+                {{ equip.name }}<br/>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col-sm-9 col-lg-9">
 
-      <div class="main">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
 
-              <div class="alert alert-{{ category }}">
-                <strong>{{ category|capitalize }}!</strong> {{ message }}
-              </div>
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
 
-        {% block content %}
-          put your content here
-        {% endblock %}
+
+      <div class="col-sm-4">
+        <div class="main">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+
+                <div class="alert alert-{{ category }}">
+                  <strong>{{ category|capitalize }}!</strong> {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+
+          {% block content %}
+            put your content here
+          {% endblock %}
+        </div>
       </div>
-    </div>
+
+
+  </div>
+
+
+</div>
+    
 
 
 
     {% endif %}
   </div>
+
+
+
+
+<br/>
+
+
+
+
+
+
+
+
+
 </div>
 
-  <div id="addTasks" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Add Task</h4>
-          </div>
-          <div class="modal-body">
-            <form action="/add-task" method="POST">
-              Task: <select name="task_name">
-
-              </select><br/>
-              Technician: <input type="text" name="ename"><br/>
-              Date: <input type="date" name="date"><br/>
-              <input type="submit" value="Add">
-            </form>
-
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-
-      </div>
-    </div>
+  
 
 
 

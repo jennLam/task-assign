@@ -4,20 +4,26 @@
 <div class="container-fluid">
   <h4>Assignments</h4>
 
-  <h4>Completed</h4>
-  {% for assignment in completed %}
-    {{ assignment.name }}<br/>
-  {% endfor %}
+  {% if completed %}
+    <h4>Completed</h4>
+    {% for assignment in completed %}
+      {{ assignment.name }}<br/>
+    {% endfor %}
+  {% endif %}
 
-  <h4>In Progress</h4>
-  {% for assignment in ip %}
-    {{ assignment.name }}<br/>
-  {% endfor %}
+  {% if ip %}
+    <h4>In Progress</h4>
+    {% for assignment in ip %}
+      {{ assignment.name }}<br/>
+    {% endfor %}
+  {% endif %}
 
-  <h4>To Be Done</h4>
-  {% for assignment in tbd %}
-    {{ assignment.name }}<br/>
-  {% endfor %}
+  {% if tbd %}
+    <h4>To Be Done</h4>
+    {% for assignment in tbd %}
+      {{ assignment.name }}<br/>
+    {% endfor %}
+  {% endif %}
 
 </div>
 

@@ -6,13 +6,19 @@
   transform: translate(-50%, -50%);
 }
 
-.sidebar {
-  width: 100%;
+.box {
+  height: 300px;
   padding: 10px;
   margin-left: 0px;
   margin-right: 0px;
   background-color: #f8f8f8;
-  border: 1px solid red;
+  border: 1px solid black;
+}
+
+.list {
+  height: 75%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .main {
