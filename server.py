@@ -23,6 +23,19 @@ def before_request():
     if g.user_id:
         g.current_user = User.query.get(g.user_id)
 
+    completed_stat = AssignStatus.query.filter_by(name="Completed").first()
+    ip_stat = AssignStatus.query.filter_by(name="In Progress").first()
+    tbd_stat = AssignStatus.query.filter_by(name="To Be Done").first()
+
+    g.completed = Assignment.query.filter_by(user_id=g.user_id,
+                                             assignstat_id=completed_stat.assignstat_id).all()
+
+    g.ip = Assignment.query.filter_by(user_id=g.user_id,
+                                      assignstat_id=ip_stat.assignstat_id).all()
+
+    g.tbd = Assignment.query.filter_by(user_id=g.user_id,
+                                       assignstat_id=tbd_stat.assignstat_id).all()
+
 
 def login_required(f):
     @wraps(f)

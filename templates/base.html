@@ -10,6 +10,8 @@
 
     <link rel="stylesheet" type="text/css" href="/static/tasktracker.css">
 
+    <link href="https://fonts.googleapis.com/css?family=Lato|Oswald:600" rel="stylesheet">
+
   </head>
   <body>
     <div class="container-fluid">
@@ -24,11 +26,10 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span> 
           </button>
-          <a class="navbar-brand" href="/">Task Tracker</a>
+          <a class="navbar-brand" href="/">Task Tracker</h4></a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home</a></li>
 
 
           </ul>
@@ -68,14 +69,34 @@
       <div class="row">
         <div class="col-sm-6">
           <div class="box">
-            <h4 class="header"><span class="glyphicon glyphicon-calendar"></span> ASSIGNMENT
-            <a href="/show-assign-form" class="badge pull-right">+</a>
+            <h4 class="header"><span class="glyphicon glyphicon-list-alt"></span> ASSIGNMENT
+            <a href="/show-assign-form" class="badge pull-right">Add</a>
             </h4>
-            <hr>
+            
             <div class="list">
-              <a href="#">Completed</a><br/>
-              <a href="#">In Progress</a><br/>
-              <a href="#">To Be Done</a>
+
+              {% if g.completed %}
+                <h4><span class="label label-success">Completed</span></h4>
+                {% for assignment in g.completed %}
+                  {{ assignment.name }}<br/>
+                {% endfor %}
+              {% endif %}
+
+              {% if g.ip %}
+                <h4><span class="label label-warning">In Progress</span></h4>
+                {% for assignment in g.ip %}
+                  {{ assignment.name }}<br/>
+                {% endfor %}
+              {% endif %}
+
+              {% if g.tbd %}
+                <h4><span class="label label-danger">To Be Done</span></h4>
+                {% for assignment in g.tbd %}
+                  {{ assignment.name }}<br/>
+                {% endfor %}
+              {% endif %}
+
+
             </div>
           </div>
         </div>
@@ -95,10 +116,10 @@
       <div class="row">
         <div class="col-sm-4">
           <div class="box">
-            <h4 class="header"><span class="glyphicon glyphicon-calendar"></span> TASK
-              <a href="/show-task-form" class="badge pull-right">+</a>
+            <h4 class="header"><span class="glyphicon glyphicon-tasks"></span> TASK
+              <a href="/show-task-form" class="badge pull-right">Add</a>
             </h4>
-            <hr>
+            
             <div class="list">
               {% for task in g.current_user.tasks %}
                 {{ task.name }} <br/>
@@ -109,10 +130,10 @@
         </div>
         <div class="col-sm-4">
           <div class="box">
-            <h4 class="header"><span class="glyphicon glyphicon-calendar"></span> TECHNICIAN
-              <a href="/show-tech-form" class="badge pull-right">+</a>
+            <h4 class="header"><span class="glyphicon glyphicon-pawn"></span> TECHNICIAN
+              <a href="/show-tech-form" class="badge pull-right">Add</a>
             </h4>
-            <hr>
+            
             <div class="list">
               {% for tech in g.current_user.technicians %}
                 {{ tech.name }}</br>
@@ -122,10 +143,10 @@
         </div>
         <div class="col-sm-4">
           <div class="box">
-            <h4 class="header"><span class="glyphicon glyphicon-calendar"></span> EQUIPMENT
-              <a href="/show-equip-form" class="badge pull-right">+</a>
+            <h4 class="header"><span class="glyphicon glyphicon-wrench"></span> EQUIPMENT
+              <a href="/show-equip-form" class="badge pull-right">Add</a>
             </h4>
-            <hr>
+            
             <div class="list">
               {% for equip in g.current_user.equipments %}
                 {{ equip.name }}<br/>
