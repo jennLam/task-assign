@@ -6,39 +6,50 @@
     <a href="/show-edit-assign-form" class="badge pull-right">Edit</a>
   </h4>
   <br/>
-  <table class="table">
+  <table class="table table-bordered">
 
     <tbody>
       <tr>
-        <td><h4><span class="label label-default pull-right">Status</span</h4></td>
+        <td><span class="pull-right">Status</span</td>
         <td valign="center">{{ assignment.assignstat.name }}</td>
 
       </tr>
       <tr>
-        <td><h4><span class="label label-default pull-right">Technician</span</h4></td>
+        <td><span class="pull-right">Technician</span</td>
         <td valign="center">{% for tech in assignment.technicians %} {{ tech.name }} {% endfor %}</td>
 
       </tr>
       <tr>
-        <td><h4><span class="label label-default pull-right">Equipment</span</h4></td>
+        <td><span class="pull-right">Equipment</span></td>
         <td>{% for equip in assignment.equipments %} {{ equip.name }} {% endfor %}</td>
 
       </tr>
       <tr>
-        <td><h4><span class="label label-default pull-right">Task Details</span</h4></td>
+        <td><span class="pull-right">Task Details</span></td>
         <td>{% for task in assignment.tasks %} {{ task.details }} {% endfor %}</td>
 
       </tr>
 
       {% if assignment.details %}
         <tr>
-          <td><h4><span class="label label-default pull-right">Assignment Details</span</h4></td>
+          <td><span class="pull-right">Assignment Details</span></td>
           <td>{{ assignment.details }}</td>
 
         </tr>
       {% endif %}
     </tbody>
   </table>
+
+  {% if assignment.assignstat.name != "Completed" %}
+
+    <form action="/send-text" method="POST">
+      <div class="form-group">
+        <input type="hidden" name="assignment" value="{{ assignment.assignment_id }}">
+        <button type="submit" class="btn btn-default">Send Text</button>
+      </div>
+    </form>
+
+  {% endif %}
   
 
 </div>

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, flash, session, g, url_for
+from flask import Flask, render_template, redirect, request, flash, session, g, url_for, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 from jinja2 import StrictUndefined
 from model import User, Technician, Equipment, Task, Status, Assignment, AssignmentTask, AssignmentTechnician, AssignmentEquipment, AssignStatus
@@ -7,6 +7,7 @@ from functools import wraps
 from datetime import datetime
 import os
 from helper import check_and_add, add_to_database
+from text import send_sms
 
 
 app = Flask(__name__)
@@ -294,6 +295,51 @@ def add_equip():
     check_and_add(existing_equip, new_equip)
 
     return redirect(request.referrer)
+
+
+@app.route("/send-text", methods=["POST"])
+@login_required
+def send_text():
+    """Send text to user."""
+
+    assign_id = request.form.get("assignment")
+
+    assign = Assignment.query.get(assign_id)
+
+    tech = assign.technicians[0]
+
+    number = "+1" + tech.phone_number.replace("-", "")
+
+    # print number
+
+    task = assign.tasks[0]
+
+    txt_back = "Text Back [Assignment Number] Completed, In Progress or To Be Done."
+    message = "Assignment Number: " + assign_id + "\n\nAssignment: " + assign.name + "\n\nTask Details: " + task.details + "\nAssignment Details: " + assign.details + "\n\n" + txt_back
+    # print message
+
+    send_sms(number, message)
+
+    flash("Message sent.", "info")
+
+    return redirect(request.referrer)
+
+
+@app.route("/assign-data.json")
+def buying_rates():
+    """Return assignment status information."""
+
+    data_dict = {"labels": ["Completed", "In Progress", "To Be Done"],
+                 "datasets": [{"data": [len(g.completed), len(g.ip), len(g.tbd)],
+                               "label": "Buying Rate ($ Spent / HH)",
+                               "backgroundColor": ["#52D1DC",
+                                                   "#475B5A",
+                                                   "#8D8E8E"],
+                               "hoverBackgroundColor": ["#52D1DC",
+                                                        "#475B5A",
+                                                        "#8D8E8E"]}]}
+
+    return jsonify(data_dict)
 
 
 # @app.route("/show-status-form")

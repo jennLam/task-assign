@@ -8,6 +8,8 @@
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.js"></script>
+
     <link rel="stylesheet" type="text/css" href="/static/tasktracker.css">
 
     <link href="https://fonts.googleapis.com/css?family=Lato|Oswald:600" rel="stylesheet">
@@ -29,7 +31,7 @@
       <div class="row">
         <div class="col-sm-6">
           <div class="box">
-            <h4 class="header"><span class="glyphicon glyphicon-list-alt"></span> ASSIGNMENT
+            <h4 class="header"><span class="glyphicon glyphicon-list-alt"></span> Assignments
             <a href="/show-assign-form" class="badge pull-right">Add</a>
             </h4>
             
@@ -68,9 +70,30 @@
         </div>
         <div class="col-sm-6">
           <div class="box">
-            <p>Text</p> 
-            <p>Text</p> 
-            <p>Text</p> 
+            <h4><span class="glyphicon glyphicon-stats"></span> Assignments Data</h4>
+
+            <div class="assign-stat-info">
+              <canvas id="assignStatInfo"></canvas>
+              <div id="donutLegend" class="chart-legend"></div>
+            </div>
+
+            <script>
+
+            Chart.defaults.global.defaultFontFamily = "Arial";
+            var options = { responsive: true,
+                            legend: {position: 'bottom'} };
+            var ctx= $("#assignStatInfo").get(0).getContext("2d");
+            $.get("/assign-data.json", function (data) {
+                var myBarChart = new Chart(ctx, {
+                  type: 'doughnut',
+                  data: data,
+                  options: options
+                });
+
+                $("#donutLegend").html(myDonutChart.generateLegend());
+            });
+
+            </script>
           </div>
         </div>
         
@@ -82,7 +105,7 @@
       <div class="row">
         <div class="col-sm-4">
           <div class="box">
-            <h4 class="header"><span class="glyphicon glyphicon-tasks"></span> TASK
+            <h4 class="header"><span class="glyphicon glyphicon-tasks"></span> Tasks
               <a href="/show-task-form" class="badge pull-right">Add</a>
             </h4>
             
@@ -98,7 +121,7 @@
         </div>
         <div class="col-sm-4">
           <div class="box">
-            <h4 class="header"><span class="glyphicon glyphicon-pawn"></span> TECHNICIAN
+            <h4 class="header"><span class="glyphicon glyphicon-pawn"></span> Technicians
               <a href="/show-tech-form" class="badge pull-right">Add</a>
             </h4>
             
@@ -113,7 +136,7 @@
         </div>
         <div class="col-sm-4">
           <div class="box">
-            <h4 class="header"><span class="glyphicon glyphicon-wrench"></span> EQUIPMENT
+            <h4 class="header"><span class="glyphicon glyphicon-wrench"></span> Equipment
               <a href="/show-equip-form" class="badge pull-right">Add</a>
             </h4>
             
@@ -133,7 +156,7 @@
 
 
       <div class="col-sm-4 hello">
-        <h2 class="main-header">Tech Assign</h2>
+        <h2 class="main-header"><a href="/">Tech Assign</a></h2>
 
         <div class="main">
           {% with messages = get_flashed_messages(with_categories=true) %}
