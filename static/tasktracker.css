@@ -1,8 +1,19 @@
 body {
-  background-image: url("/static/tree_bark.png");
+  height: 100vh;
+  /*background-image: url("/static/tree_bark.png");*/
+  background-color: #F2E9E4;
   font-family: 'Lato', sans-serif;
-  color: #000000;
+  color: #22223B;
   font-size: 10pt;
+}
+
+h2 {
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+}
+
+.main-header {
+  text-align: right;
 }
 
 h4 {
@@ -22,17 +33,21 @@ h4 {
   padding: 10px;
   margin-left: 0px;
   margin-right: 0px;
-  background-color: #f8f8f8;
+  background-color: #C9ADA7;
   /*background-image: url("/static/wood_1.png");*/
   opacity: 0.85;
-  border: 1px solid black;
+  border: 0px solid black;
 }
 
 .list {
   height: 85%;
   overflow-y: auto;
   overflow-x: hidden;
-  background-color: #FFFFFF;
+  background-color: #F2E9E4;
+}
+
+table {
+  border: 0px solid black;
 }
 
 .main {
@@ -40,9 +55,37 @@ h4 {
   padding: 10px;
   margin-left: 0px;
   margin-right: 0px;
-  background-color: #f8f8f8;
-  border: 1px solid red;
+  background-color: #9A8C98;
+  border: 0px solid red;
 }
+
+/*td {
+  vertical-align: center;
+}*/
+
+.hello {
+  height: 100vh;
+  background-color: #4A4E69;
+
+}
+
+ul {
+    list-style: none; /* Remove HTML bullets */
+    padding: 0;
+    margin: 0;
+}
+
+li.content { 
+    padding-left: 10px; 
+    padding-top: 6px;
+}
+
+li.content:before {
+    content: "•"; /* Insert content that looks like bullets */
+    padding-right: 8px;
+    color: red; /* Or a color you prefer */
+}
+
 .alert {
     width: 100%;
 

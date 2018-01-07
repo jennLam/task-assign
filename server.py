@@ -4,6 +4,7 @@ from jinja2 import StrictUndefined
 from model import User, Technician, Equipment, Task, Status, Assignment, AssignmentTask, AssignmentTechnician, AssignmentEquipment, AssignStatus
 from model import connect_to_db, db
 from functools import wraps
+from datetime import datetime
 import os
 from helper import check_and_add, add_to_database
 
@@ -112,33 +113,33 @@ def process_login():
     return redirect(request.referrer)
 
 
-@app.route("/resources")
-@login_required
-def manage_resources():
-    """Show resources page."""
+# @app.route("/resources")
+# @login_required
+# def manage_resources():
+#     """Show resources page."""
 
-    return render_template("resources.html")
+#     return render_template("resources.html")
 
 
-@app.route("/assign")
-@login_required
-def show_assign():
-    """Show assignments page."""
+# @app.route("/assign")
+# @login_required
+# def show_assign():
+#     """Show assignments page."""
 
-    completed_stat = AssignStatus.query.filter_by(name="Completed").first()
-    ip_stat = AssignStatus.query.filter_by(name="In Progress").first()
-    tbd_stat = AssignStatus.query.filter_by(name="To Be Done").first()
+#     completed_stat = AssignStatus.query.filter_by(name="Completed").first()
+#     ip_stat = AssignStatus.query.filter_by(name="In Progress").first()
+#     tbd_stat = AssignStatus.query.filter_by(name="To Be Done").first()
 
-    completed = Assignment.query.filter_by(user_id=g.user_id,
-                                           assignstat_id=completed_stat.assignstat_id).all()
+#     completed = Assignment.query.filter_by(user_id=g.user_id,
+#                                            assignstat_id=completed_stat.assignstat_id).all()
 
-    ip = Assignment.query.filter_by(user_id=g.user_id,
-                                    assignstat_id=ip_stat.assignstat_id).all()
+#     ip = Assignment.query.filter_by(user_id=g.user_id,
+#                                     assignstat_id=ip_stat.assignstat_id).all()
 
-    tbd = Assignment.query.filter_by(user_id=g.user_id,
-                                     assignstat_id=tbd_stat.assignstat_id).all()
+#     tbd = Assignment.query.filter_by(user_id=g.user_id,
+#                                      assignstat_id=tbd_stat.assignstat_id).all()
 
-    return render_template("assign.html", completed=completed, ip=ip, tbd=tbd)
+#     return render_template("assign.html", completed=completed, ip=ip, tbd=tbd)
 
 
 @app.route("/show-assign-form")
@@ -147,6 +148,29 @@ def show_assign_form():
     """Show assignment form."""
 
     return render_template("assign-form.html")
+
+
+@app.route("/show-edit-assign-form")
+@login_required
+def show_edit_assign_form():
+    """Show edit assignment form."""
+
+    return render_template("edit-assign-form.html")
+
+
+@app.route("/assign/<assignment_id>")
+@login_required
+def show_assign_details(assignment_id):
+    """Show assignment details."""
+
+    print assignment_id
+    assignment = Assignment.query.get(assignment_id)
+
+    if assignment:
+        return render_template("assign-details.html", assignment=assignment)
+    else:
+        flash("Assignment does not exist.", "warning")
+        return redirect(request.referrer)
 
 
 @app.route("/add-assign", methods=["POST"])
@@ -272,28 +296,28 @@ def add_equip():
     return redirect(request.referrer)
 
 
-@app.route("/show-status-form")
-@login_required
-def show_status_form():
-    """Show status form."""
+# @app.route("/show-status-form")
+# @login_required
+# def show_status_form():
+#     """Show status form."""
 
-    return render_template("status-form.html")
+#     return render_template("status-form.html")
 
 
-@app.route("/add-status", methods=["POST"])
-@login_required
-def add_status():
-    """Add status to database."""
+# @app.route("/add-status", methods=["POST"])
+# @login_required
+# def add_status():
+#     """Add status to database."""
 
-    status = request.form.get("status")
+#     status = request.form.get("status")
 
-    existing_status = Status.query.filter_by(name=status).first()
+#     existing_status = Status.query.filter_by(name=status).first()
 
-    new_status = Status(user_id=g.user_id, name=status)
+#     new_status = Status(user_id=g.user_id, name=status)
 
-    check_and_add(existing_status, new_status)
+#     check_and_add(existing_status, new_status)
 
-    return redirect(request.referrer)
+#     return redirect(request.referrer)
 
 
 @app.route("/logout")

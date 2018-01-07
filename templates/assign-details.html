@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container-fluid">
+  <h4>{{ assignment.name|upper }} Assignment Details
+    <a href="/show-edit-assign-form" class="badge pull-right">Edit</a>
+  </h4>
+  <br/>
+  <table class="table">
+
+    <tbody>
+      <tr>
+        <td><h4><span class="label label-default pull-right">Status</span</h4></td>
+        <td valign="center">{{ assignment.assignstat.name }}</td>
+
+      </tr>
+      <tr>
+        <td><h4><span class="label label-default pull-right">Technician</span</h4></td>
+        <td valign="center">{% for tech in assignment.technicians %} {{ tech.name }} {% endfor %}</td>
+
+      </tr>
+      <tr>
+        <td><h4><span class="label label-default pull-right">Equipment</span</h4></td>
+        <td>{% for equip in assignment.equipments %} {{ equip.name }} {% endfor %}</td>
+
+      </tr>
+      <tr>
+        <td><h4><span class="label label-default pull-right">Task Details</span</h4></td>
+        <td>{% for task in assignment.tasks %} {{ task.details }} {% endfor %}</td>
+
+      </tr>
+
+      {% if assignment.details %}
+        <tr>
+          <td><h4><span class="label label-default pull-right">Assignment Details</span</h4></td>
+          <td>{{ assignment.details }}</td>
+
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+  
+
+</div>
+
+{% endblock %}

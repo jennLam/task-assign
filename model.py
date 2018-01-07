@@ -154,11 +154,11 @@ class Assignment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     assignstat_id = db.Column(db.Integer, db.ForeignKey("assignstats.assignstat_id"))
     name = db.Column(db.String(25), nullable=False)
+    # date = db.Column(db.DateTime)
     details = db.Column(db.String(500))
 
     user = db.relationship("User", backref=db.backref("assignments"))
     assignstat = db.relationship("AssignStatus", backref=db.backref("assignments"))
-
 
     def __repr__(self):
         """Provide helpful representation when printed."""

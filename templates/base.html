@@ -14,58 +14,18 @@
 
   </head>
   <body>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-12-offset-0">
 
-    <nav class="navbar navbar-inverse">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span> 
-          </button>
-          <a class="navbar-brand" href="/">Task Tracker</h4></a>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-          <ul class="nav navbar-nav">
-
-
-          </ul>
-        
-          <ul class="nav navbar-nav navbar-right">
-            {% if session.get("user_name") %}
-              <li><a href="#">Welcome {{ session["user_name"] }}!</a></li>
-            {% else %}
-              <li><a href="#" data-toggle="modal" data-target="#registerForm">Register</a></li>
-            {% endif %}
-
-            {% if session.get("user_id") %}
-              <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> LOGOUT</a></li>
-            {% else %}
-              <li><a href="#" data-toggle="modal" data-target="#loginForm">Login</a></li>
-            {% endif %}
-          
-          </ul>
-        </div>
-      </div>
-    </nav>
-  </div>
-  </div>
-    
-
-      <div class="row">
 
 
     {% if session.get("user_id") %}
 
     <div class="container-fluid">
-        <div class="row content">
+        <div class="row">
   
 
     
     <div class="col-sm-8">
+      <h2>Welcome, {{ g.current_user.fname}}!</h2>
       <div class="row">
         <div class="col-sm-6">
           <div class="box">
@@ -77,23 +37,29 @@
 
               {% if g.completed %}
                 <h4><span class="label label-success">Completed</span></h4>
-                {% for assignment in g.completed %}
-                  {{ assignment.name }}<br/>
-                {% endfor %}
+                <ul>
+                  {% for assignment in g.completed %}
+                    <li class="content"><a href="/assign/{{ assignment.assignment_id}}">{{ assignment.name }}</a></li>
+                  {% endfor %}
+                </ul>
               {% endif %}
 
               {% if g.ip %}
                 <h4><span class="label label-warning">In Progress</span></h4>
-                {% for assignment in g.ip %}
-                  {{ assignment.name }}<br/>
-                {% endfor %}
+                <ul>
+                  {% for assignment in g.ip %}
+                    <li class="content"><a href="/assign/{{ assignment.assignment_id}}">{{ assignment.name }}</a></li>
+                  {% endfor %}
+                </ul>
               {% endif %}
 
               {% if g.tbd %}
                 <h4><span class="label label-danger">To Be Done</span></h4>
-                {% for assignment in g.tbd %}
-                  {{ assignment.name }}<br/>
-                {% endfor %}
+                <ul>
+                  {% for assignment in g.tbd %}
+                    <li class="content"><a href="/assign/{{ assignment.assignment_id}}">{{ assignment.name }}</a></li>
+                  {% endfor %}
+                </ul>
               {% endif %}
 
 
@@ -121,9 +87,11 @@
             </h4>
             
             <div class="list">
-              {% for task in g.current_user.tasks %}
-                {{ task.name }} <br/>
-              {% endfor%}
+              <ul>
+                {% for task in g.current_user.tasks %}
+                  <li class="content">{{ task.name }} </li>
+                {% endfor%}
+              </ul>
             </div>
 
           </div>
@@ -135,9 +103,11 @@
             </h4>
             
             <div class="list">
-              {% for tech in g.current_user.technicians %}
-                {{ tech.name }}</br>
-              {% endfor %}
+              <ul>
+                {% for tech in g.current_user.technicians %}
+                  <li class="content">{{ tech.name }}</li>
+                {% endfor %}
+              </ul>
             </div>
           </div>
         </div>
@@ -148,9 +118,11 @@
             </h4>
             
             <div class="list">
-              {% for equip in g.current_user.equipments %}
-                {{ equip.name }}<br/>
-              {% endfor %}
+              <ul>
+                {% for equip in g.current_user.equipments %}
+                  <li class="content">{{ equip.name }}</li>
+                {% endfor %}
+              </ul>
             </div>
           </div>
         </div>
@@ -160,7 +132,9 @@
 
 
 
-      <div class="col-sm-4">
+      <div class="col-sm-4 hello">
+        <h2 class="main-header">Tech Assign</h2>
+
         <div class="main">
           {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
@@ -189,22 +163,7 @@
 
 
     {% endif %}
-  </div>
 
-
-
-
-<br/>
-
-
-
-
-
-
-
-
-
-</div>
 
   
 

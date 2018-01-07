@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container-fluid">
+  <h4>Edit Assignment</h4>
+
+  <form action="/edit-assign" method="POST">
+
+    <div class="form-group">
+      <label for="task">Task:</label>
+      <select class="form-control" id="task" name="task">
+        {% for task in g.current_user.tasks %}
+          <option value="{{ task.task_id }}">{{ task.name }}</option>
+        {% endfor %}
+      </select>
+      <br/>
+    </div>
+
+    <div class="form-group">
+      <label for="tech">Technician:</label>
+      <select class="form-control" id="tech" name="tech">
+        {% for tech in g.current_user.technicians %}
+          <option value="{{ tech.tech_id }}">{{ tech.name }}</option>
+        {% endfor %}
+      </select>
+      <br/>
+    </div>
+
+    <div class="form-group">
+      <label for="equip">Equipment:</label>
+      <select class="form-control" id="equip" name="equip">
+        {% for equip in g.current_user.equipments %}
+          <option value="{{ equip.equip_id }}">{{ equip.name }}</option>
+        {% endfor %}
+      </select>
+      <br/>
+    </div>
+
+    <div class="form-group">
+      <label for="details">Details:</label>
+      <textarea class="form-control" rows="5" name="details" placeholder="Enter details"></textarea>
+    </div>
+    
+    <div class="form-group"> 
+      <button type="submit" class="btn btn-default">Submit</button>
+    </div>
+  </form>
+
+</div>
+
+{% endblock %}
