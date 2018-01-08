@@ -7,7 +7,7 @@ body {
   font-size: 9pt;
 }
 
-h2 {
+h2, .label {
   font-family: 'Oswald', sans-serif;
   text-transform: uppercase;
 }
@@ -27,6 +27,20 @@ h4 {
 }
 
 .box h4 {
+  color: #4A4E69;
+}
+
+.box .badge {
+  background-color: #4A4E69;
+  color: #F2E9E4;
+}
+
+.main .badge {
+  background-color: #9A8C98;
+  color: #F2E9E4; 
+}
+
+.glyphicon {
   color: #22223B;
 }
 
@@ -119,7 +133,7 @@ li.content {
 li.content:before {
     content: "•"; /* Insert content that looks like bullets */
     padding-right: 8px;
-    color: #D66853; /* Or a color you prefer */
+    color: #d9534f; /* Or a color you prefer */
 }
 
 .alert {
