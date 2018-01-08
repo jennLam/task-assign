@@ -1,7 +1,7 @@
 body {
   height: 100vh;
   /*background-image: url("/static/tree_bark.png");*/
-  background-color: #F2E9E4;
+  background-color: #9A8C98;
   font-family: 'Lato', sans-serif;
   color: #22223B;
   font-size: 9pt;
@@ -12,6 +12,11 @@ h2 {
   text-transform: uppercase;
 }
 
+h2 a:link,
+h2 a:visited {
+  color: #C9ADA7;
+}
+
 .main-header {
   text-align: right;
 }
@@ -19,6 +24,34 @@ h2 {
 h4 {
   font-family: 'Oswald', sans-serif;
   text-transform: uppercase;
+}
+
+.box h4 {
+  color: #22223B;
+}
+
+.main h4 {
+  color: #F2E9E4;
+}
+
+a:link {
+  color: #22223B;
+}
+
+a:visited {
+    color: #22223B;
+}
+
+a:hover {
+    color: #C9ADA7;
+}
+
+a.badge:visited {
+  color: #f8f8f8;
+}
+
+a.badge:hover {
+  background-color: #22223B;
 }
 
 .home {
@@ -36,7 +69,7 @@ h4 {
   margin-right: 0px;
   background-color: #C9ADA7;
   /*background-image: url("/static/wood_1.png");*/
-  opacity: 0.85;
+  
   border: 0px solid black;
 }
 
@@ -45,6 +78,7 @@ h4 {
   overflow-y: auto;
   overflow-x: hidden;
   background-color: #F2E9E4;
+  opacity: 1;
 }
 
 table.table-bordered {
@@ -56,7 +90,8 @@ table.table-bordered {
   padding: 10px;
   margin-left: 0px;
   margin-right: 0px;
-  background-color: #9A8C98;
+  background-color: #4A4E69;
+  color: #F2E9E4;
   border: 0px solid red;
 }
 
@@ -66,7 +101,7 @@ table.table-bordered {
 
 .hello {
   height: 100vh;
-  background-color: #4A4E69;
+  background-color: #22223B;
 
 }
 
@@ -84,7 +119,7 @@ li.content {
 li.content:before {
     content: "•"; /* Insert content that looks like bullets */
     padding-right: 8px;
-    color: red; /* Or a color you prefer */
+    color: #D66853; /* Or a color you prefer */
 }
 
 .alert {

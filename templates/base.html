@@ -71,7 +71,7 @@
         <div class="col-sm-6">
           <div class="box">
             <h4><span class="glyphicon glyphicon-stats"></span> Assignments Data</h4>
-
+            <br/>
             <div class="assign-stat-info">
               <canvas id="assignStatInfo"></canvas>
               <div id="donutLegend" class="chart-legend"></div>
@@ -79,9 +79,13 @@
 
             <script>
 
-            Chart.defaults.global.defaultFontFamily = "Arial";
+            Chart.defaults.global.defaultFontFamily = "Lato";
             var options = { responsive: true,
-                            legend: {position: 'bottom'} };
+                            legend: { position: 'bottom',
+                                      labels: { fontColor:'#F2E9E4'
+                                              }
+                                     } 
+                          };
             var ctx= $("#assignStatInfo").get(0).getContext("2d");
             $.get("/assign-data.json", function (data) {
                 var myBarChart = new Chart(ctx, {

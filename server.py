@@ -8,6 +8,7 @@ from datetime import datetime
 import os
 from helper import check_and_add, add_to_database
 from text import send_sms
+from twilio.twiml.messaging_response import MessagingResponse
 
 
 app = Flask(__name__)
@@ -325,6 +326,33 @@ def send_text():
     return redirect(request.referrer)
 
 
+# @app.route("/sms", methods=["POST"])
+# def sms_reply():
+
+#     resp = MessagingResponse()
+
+#     user_response = request.form.get("Body")
+#     user_number = request.form.get("From")
+
+#     response = user_response.rstrip()
+#     response_lst = response.split()
+
+#     if len(response_lst) != 2:
+#         resp.message("Incorrect Format.")
+#     else:
+
+#         assign_id = response_lst[0]
+#         tech = Assignment.
+
+
+
+
+
+
+
+#     return
+
+
 @app.route("/assign-data.json")
 def buying_rates():
     """Return assignment status information."""
@@ -332,12 +360,13 @@ def buying_rates():
     data_dict = {"labels": ["Completed", "In Progress", "To Be Done"],
                  "datasets": [{"data": [len(g.completed), len(g.ip), len(g.tbd)],
                                "label": "Buying Rate ($ Spent / HH)",
-                               "backgroundColor": ["#52D1DC",
-                                                   "#475B5A",
-                                                   "#8D8E8E"],
-                               "hoverBackgroundColor": ["#52D1DC",
-                                                        "#475B5A",
-                                                        "#8D8E8E"]}]}
+                               "backgroundColor": ["#22223B",
+                                                   "#4A4E69",
+                                                   "#9A8C98"],
+                               "borderWidth": 0,
+                               "hoverBackgroundColor": ["#22223B",
+                                                        "#4A4E69",
+                                                        "#9A8C98"]}]}
 
     return jsonify(data_dict)
 
