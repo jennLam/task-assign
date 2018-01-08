@@ -115,35 +115,6 @@ def process_login():
     return redirect(request.referrer)
 
 
-# @app.route("/resources")
-# @login_required
-# def manage_resources():
-#     """Show resources page."""
-
-#     return render_template("resources.html")
-
-
-# @app.route("/assign")
-# @login_required
-# def show_assign():
-#     """Show assignments page."""
-
-#     completed_stat = AssignStatus.query.filter_by(name="Completed").first()
-#     ip_stat = AssignStatus.query.filter_by(name="In Progress").first()
-#     tbd_stat = AssignStatus.query.filter_by(name="To Be Done").first()
-
-#     completed = Assignment.query.filter_by(user_id=g.user_id,
-#                                            assignstat_id=completed_stat.assignstat_id).all()
-
-#     ip = Assignment.query.filter_by(user_id=g.user_id,
-#                                     assignstat_id=ip_stat.assignstat_id).all()
-
-#     tbd = Assignment.query.filter_by(user_id=g.user_id,
-#                                      assignstat_id=tbd_stat.assignstat_id).all()
-
-#     return render_template("assign.html", completed=completed, ip=ip, tbd=tbd)
-
-
 @app.route("/show-assign-form")
 @login_required
 def show_assign_form():
@@ -326,31 +297,67 @@ def send_text():
     return redirect(request.referrer)
 
 
-# @app.route("/sms", methods=["POST"])
-# def sms_reply():
+@app.route("/sms", methods=["POST"])
+def sms_reply():
 
-#     resp = MessagingResponse()
+    resp = MessagingResponse()
 
-#     user_response = request.form.get("Body")
-#     user_number = request.form.get("From")
+    user_response = request.form.get("Body")
+    user_number = request.form.get("From")
 
-#     response = user_response.rstrip()
-#     response_lst = response.split()
+    print user_response
+    print user_number
 
-#     if len(response_lst) != 2:
-#         resp.message("Incorrect Format.")
-#     else:
+    response = user_response.rstrip()
+    response_lst = response.split()
 
-#         assign_id = response_lst[0]
-#         tech = Assignment.
+    print response_lst
 
+    if len(response_lst) != 2:
+        resp.message("Incorrect Format.")
+    else:
 
+        match = False
 
+        assign_id = response_lst[0]
 
+        assign = Assignment.query.get(assign_id)
+        techs = assign.technicians
 
+        for tech in techs:
+            number = "+1" + tech.phone_number.replace("-", "")
+            if user_number == number:
+                match = True
 
+        if match:
 
-#     return
+            status_num = None
+
+            status = response_lst[1]
+
+            print status
+
+            if status.lower() == "completed":
+                status_num = 1
+            elif status.lower() == "in progress":
+                status_num = 2
+            elif status.lower() == "to be done":
+                status_num = 3
+
+            if status_num:
+
+                assign.assignstat_id = status_num
+
+                db.session.commit()
+
+                flash("Assignment Status updated.", "success")
+
+                resp.message("Assignment Status updated.")
+
+            else:
+                resp.message("Incorrect.")
+
+    return str(resp)
 
 
 @app.route("/assign-data.json")
