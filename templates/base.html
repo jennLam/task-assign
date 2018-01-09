@@ -17,93 +17,90 @@
   </head>
   <body>
 
-
-
     {% if session.get("user_id") %}
 
     <div class="container-fluid">
         <div class="row">
   
+          <div class="col-sm-8">
+            <h2>Welcome, {{ g.current_user.fname}}!</h2>
 
-    
-    <div class="col-sm-8">
-      <h2>Welcome, {{ g.current_user.fname}}!</h2>
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="box">
-            <h4 class="header"><span class="glyphicon glyphicon-list-alt"></span> Assignments
-            <a href="/show-assign-form" class="badge pull-right">Add</a>
-            </h4>
-            
-            <div class="list">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="box">
+                  <h4 class="header"><span class="glyphicon glyphicon-list-alt"></span> Assignments
+                    <a href="/show-assign-form" class="badge pull-right">Add</a>
+                  </h4>
+                  
+                  <div class="list">
 
-              {% if g.completed %}
-                <h4>&nbsp;&nbsp;<span class="label label-danger">Completed</span></h4>
-                <ul>
-                  {% for assignment in g.completed %}
-                    <li class="content"><a href="/assign/{{ assignment.assignment_id}}">{{ assignment.name }}</a></li>
-                  {% endfor %}
-                </ul>
-              {% endif %}
+                    {% if g.completed %}
+                      <h4>&nbsp;&nbsp;<span class="label label-danger">Completed</span></h4>
+                      <ul>
+                        {% for assignment in g.completed %}
+                          <li class="content"><a href="/assign/{{ assignment.assignment_id}}">{{ assignment.name }}</a></li>
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
 
-              {% if g.ip %}
-                <h4>&nbsp;&nbsp;<span class="label label-danger">In Progress</span></h4>
-                <ul>
-                  {% for assignment in g.ip %}
-                    <li class="content"><a href="/assign/{{ assignment.assignment_id}}">{{ assignment.name }}</a></li>
-                  {% endfor %}
-                </ul>
-              {% endif %}
+                    {% if g.ip %}
+                      <h4>&nbsp;&nbsp;<span class="label label-danger">In Progress</span></h4>
+                      <ul>
+                        {% for assignment in g.ip %}
+                          <li class="content"><a href="/assign/{{ assignment.assignment_id}}">{{ assignment.name }}</a></li>
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
 
-              {% if g.tbd %}
-                <h4>&nbsp;&nbsp;<span class="label label-danger">To Be Done</span></h4>
-                <ul>
-                  {% for assignment in g.tbd %}
-                    <li class="content"><a href="/assign/{{ assignment.assignment_id}}">{{ assignment.name }}</a></li>
-                  {% endfor %}
-                </ul>
-              {% endif %}
+                    {% if g.tbd %}
+                      <h4>&nbsp;&nbsp;<span class="label label-danger">To Be Done</span></h4>
+                      <ul>
+                        {% for assignment in g.tbd %}
+                          <li class="content"><a href="/assign/{{ assignment.assignment_id}}">{{ assignment.name }}</a></li>
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
 
 
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="box">
+                  <h4><span class="glyphicon glyphicon-stats"></span> Assignments Data</h4>
+                  <br/>
+                  <div class="assign-stat-info">
+                    <canvas id="assignStatInfo"></canvas>
+                    <div id="donutLegend" class="chart-legend"></div>
+                  </div>
+
+                  <script>
+
+                  Chart.defaults.global.defaultFontFamily = "Lato";
+                  var options = { responsive: true,
+                                  legend: { position: 'bottom',
+                                            labels: { fontColor:'#22223B'
+                                                    }
+                                           } 
+                                };
+                  var ctx= $("#assignStatInfo").get(0).getContext("2d");
+                  $.get("/assign-data.json", function (data) {
+                      var myBarChart = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: data,
+                        options: options
+                      });
+
+                      $("#donutLegend").html(myDonutChart.generateLegend());
+                  });
+
+                  </script>
+                </div>
+              </div>
+              
             </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="box">
-            <h4><span class="glyphicon glyphicon-stats"></span> Assignments Data</h4>
+
             <br/>
-            <div class="assign-stat-info">
-              <canvas id="assignStatInfo"></canvas>
-              <div id="donutLegend" class="chart-legend"></div>
-            </div>
-
-            <script>
-
-            Chart.defaults.global.defaultFontFamily = "Lato";
-            var options = { responsive: true,
-                            legend: { position: 'bottom',
-                                      labels: { fontColor:'#22223B'
-                                              }
-                                     } 
-                          };
-            var ctx= $("#assignStatInfo").get(0).getContext("2d");
-            $.get("/assign-data.json", function (data) {
-                var myBarChart = new Chart(ctx, {
-                  type: 'doughnut',
-                  data: data,
-                  options: options
-                });
-
-                $("#donutLegend").html(myDonutChart.generateLegend());
-            });
-
-            </script>
-          </div>
-        </div>
-        
-      </div>
-
-      <br/>
 
 
       <div class="row">
@@ -185,18 +182,8 @@
 
 
 </div>
-    
-
-
 
     {% endif %}
-
-
-  
-
-
-
-
 
 
 

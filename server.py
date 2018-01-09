@@ -26,6 +26,8 @@ def before_request():
     if g.user_id:
         g.current_user = User.query.get(g.user_id)
 
+    #Assignment information
+
     completed_stat = AssignStatus.query.filter_by(name="Completed").first()
     ip_stat = AssignStatus.query.filter_by(name="In Progress").first()
     tbd_stat = AssignStatus.query.filter_by(name="To Be Done").first()
@@ -63,6 +65,7 @@ def index():
 
 @app.route("/register")
 def show_register_form():
+    """Show registration form."""
 
     return render_template("register.html")
 
@@ -136,7 +139,6 @@ def show_edit_assign_form():
 def show_assign_details(assignment_id):
     """Show assignment details."""
 
-    print assignment_id
     assignment = Assignment.query.get(assignment_id)
 
     if assignment:
@@ -157,7 +159,6 @@ def add_assign():
     details = request.form.get("details")
 
     if task and tech and equip:
-        print task, tech, equip
 
         task_ob = Task.query.get(task)
         equip_ob = Equipment.query.get(equip)
@@ -282,13 +283,10 @@ def send_text():
 
     number = "+1" + tech.phone_number.replace("-", "")
 
-    # print number
-
     task = assign.tasks[0]
 
-    txt_back = "Text Back [Assignment Number] Completed, In Progress or To Be Done."
+    txt_back = "Text Back [Assignment Number] Completed, IP or TBD."
     message = "Assignment Number: " + assign_id + "\n\nAssignment: " + assign.name + "\n\nTask Details: " + task.details + "\nAssignment Details: " + assign.details + "\n\n" + txt_back
-    # print message
 
     send_sms(number, message)
 
@@ -299,6 +297,7 @@ def send_text():
 
 @app.route("/sms", methods=["POST"])
 def sms_reply():
+    """Process text response and send reply."""
 
     resp = MessagingResponse()
 
@@ -339,9 +338,9 @@ def sms_reply():
 
             if status.lower() == "completed":
                 status_num = 1
-            elif status.lower() == "in progress":
+            elif status.lower() == "ip":
                 status_num = 2
-            elif status.lower() == "to be done":
+            elif status.lower() == "tbd":
                 status_num = 3
 
             if status_num:
@@ -350,23 +349,23 @@ def sms_reply():
 
                 db.session.commit()
 
-                flash("Assignment Status updated.", "success")
-
                 resp.message("Assignment Status updated.")
 
             else:
                 resp.message("Incorrect.")
 
+        else:
+            resp.message("That is not your assignment.")
+
     return str(resp)
 
 
 @app.route("/assign-data.json")
-def buying_rates():
+def assign_data():
     """Return assignment status information."""
 
     data_dict = {"labels": ["Completed", "In Progress", "To Be Done"],
                  "datasets": [{"data": [len(g.completed), len(g.ip), len(g.tbd)],
-                               "label": "Buying Rate ($ Spent / HH)",
                                "backgroundColor": ["#22223B",
                                                    "#4A4E69",
                                                    "#9A8C98"],
@@ -376,30 +375,6 @@ def buying_rates():
                                                         "#9A8C98"]}]}
 
     return jsonify(data_dict)
-
-
-# @app.route("/show-status-form")
-# @login_required
-# def show_status_form():
-#     """Show status form."""
-
-#     return render_template("status-form.html")
-
-
-# @app.route("/add-status", methods=["POST"])
-# @login_required
-# def add_status():
-#     """Add status to database."""
-
-#     status = request.form.get("status")
-
-#     existing_status = Status.query.filter_by(name=status).first()
-
-#     new_status = Status(user_id=g.user_id, name=status)
-
-#     check_and_add(existing_status, new_status)
-
-#     return redirect(request.referrer)
 
 
 @app.route("/logout")

@@ -20,19 +20,3 @@ def check_and_add(existing_item, item):
     else:
         add_to_database(item)
         flash(item.__class__.__name__ + " successfully added.", "success")
-
-
-# def get_tasks(user_id):
-#     """Get tasks."""
-
-#     tasks = Task.query.filter_by(user_id=user_id).all()
-
-#     return tasks
-
-
-# def get_sidebar_info(user_id):
-#     """Get information to populate sidebar."""
-
-#     tasks = get_tasks(user_id)
-
-#     return {"tasks": tasks}
