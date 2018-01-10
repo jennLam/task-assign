@@ -12,10 +12,9 @@ This is main page.
 This is the user's homepage. The user can add resources and create assignments.
 
 ![alt text](static/taskassigndetails.png "Assignment Details")
-Click on an assignment to see all the details.
+Click on an assignment to see all the details. Press the send text button to send assignment details to the technician. The technician can reply to the text to update the assignment status.
 
 ![alt text](static/phone.png "Texts")
-Press the send text button to send assignment details to the technician. The technician can reply to the text to update the assignment status.
 
 ### Tech
 
