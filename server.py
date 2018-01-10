@@ -4,6 +4,7 @@ from jinja2 import StrictUndefined
 from model import User, Technician, Equipment, Task, Status, Assignment, AssignmentTask, AssignmentTechnician, AssignmentEquipment, AssignStatus
 from model import connect_to_db, db
 from functools import wraps
+from flask_bcrypt import Bcrypt
 from datetime import datetime
 import os
 from helper import check_and_add, add_to_database
@@ -16,6 +17,8 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY")
 
 app.jinja_env.undefined = StrictUndefined
+
+bcrypt = Bcrypt(app)
 
 
 @app.before_request
@@ -82,12 +85,14 @@ def process_register_info():
     password = request.form.get("password")
     notification = request.form.get("notification")
 
+    hashed_pw = bcrypt.generate_password_hash(password)
+
     # Get existing user in database
     existing_user = User.query.filter_by(username=uname).first()
 
     # Make new user
     new_user = User(fname=fname, lname=lname, username=uname, email=email,
-                    password=password, notification=notification)
+                    password=hashed_pw, notification=notification)
 
     # Check database, add to database
     check_and_add(existing_user, new_user)
@@ -105,7 +110,7 @@ def process_login():
     existing_user = User.query.filter_by(username=username).first()
 
     if existing_user:
-        if existing_user.password == password:
+        if bcrypt.check_password_hash(existing_user.password, password):
             session["user_id"] = existing_user.user_id
             session["user_name"] = existing_user.fname
 
@@ -167,7 +172,7 @@ def add_assign():
         tbd_stat = AssignStatus.query.filter_by(name="To Be Done").first()
 
         new_assign = Assignment(user_id=g.user_id, assignstat_id=tbd_stat.assignstat_id,
-                                name=name, details=details)
+                                name=name, date=datetime.now(), details=details)
 
         add_to_database(new_assign)
 

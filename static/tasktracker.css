@@ -1,6 +1,5 @@
 body {
   height: 100vh;
-  /*background-image: url("/static/tree_bark.png");*/
   background-color: #9A8C98;
   font-family: 'Lato', sans-serif;
   color: #22223B;
@@ -19,6 +18,14 @@ h2 a:visited {
 
 .main-header {
   text-align: right;
+}
+
+.dropdown-menu {
+  margin-left: 225px;
+}
+
+.caret {
+  color: #4A4E69;
 }
 
 h4 {
@@ -82,8 +89,6 @@ a.badge:hover {
   margin-left: 0px;
   margin-right: 0px;
   background-color: #C9ADA7;
-  /*background-image: url("/static/wood_1.png");*/
-  
   border: 0px solid black;
 }
 
@@ -116,7 +121,7 @@ table.table-bordered {
 }
 
 ul {
-    list-style: none; /* Remove HTML bullets */
+    list-style: none;
     padding: 0;
     margin: 0;
 }

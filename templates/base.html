@@ -23,7 +23,28 @@
         <div class="row">
   
           <div class="col-sm-8">
-            <h2>Welcome, {{ g.current_user.fname}}!</h2>
+            <h2>
+
+
+              <ul>
+                
+                <li class="dropdown">
+                  Welcome, {{ g.current_user.fname}}!
+
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Settings <span class="glyphicon glyphicon-cog pull-right"></span></a></li>
+                    <li class="divider"></li>
+
+                    <li><a href="/logout">Sign Out <span class="glyphicon glyphicon-log-out pull-right"></span></a></li>
+                  </ul>
+                </li>
+              </ul>
+
+            
+
+
+            </h2>
 
             <div class="row">
               <div class="col-sm-6">
@@ -157,7 +178,7 @@
 
 
       <div class="col-sm-4 hello">
-        <h2 class="main-header"><a href="/">Tech Assign</a></h2>
+        <h2 class="main-header"><a href="/">Task Assign</a></h2>
 
         <div class="main">
           {% with messages = get_flashed_messages(with_categories=true) %}

@@ -2,13 +2,18 @@
 {% block content %}
 
 <div class="container-fluid">
-  <h4>{{ assignment.name|upper }} Assignment Details
+  <h4>{{ assignment.name|upper }} Details
     <a href="/show-edit-assign-form" class="badge pull-right">Edit</a>
   </h4>
   <br/>
   <table class="table table-bordered">
 
     <tbody>
+      <tr>
+        <td><span class="pull-right">Date</span</td>
+        <td valign="center">{{ assignment.date.strftime("%B %e, %Y") }}</td>
+
+      </tr>
       <tr>
         <td><span class="pull-right">Status</span</td>
         <td valign="center">{{ assignment.assignstat.name }}</td>

@@ -154,7 +154,7 @@ class Assignment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     assignstat_id = db.Column(db.Integer, db.ForeignKey("assignstats.assignstat_id"))
     name = db.Column(db.String(25), nullable=False)
-    # date = db.Column(db.DateTime)
+    date = db.Column(db.DateTime)
     details = db.Column(db.String(500))
 
     user = db.relationship("User", backref=db.backref("assignments"))
@@ -163,8 +163,8 @@ class Assignment(db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        s = "<Assignment assignment_id=%s user_id=%s assignstat_id=%s name=%s details=%s>"
-        return s % (self.assignment_id, self.user_id, self.assignstat_id, self.name, self.details)
+        s = "<Assignment assignment_id=%s user_id=%s assignstat_id=%s name=%s date=%s details=%s>"
+        return s % (self.assignment_id, self.user_id, self.assignstat_id, self.name, self.date, self.details)
 
 
 class AssignmentTechnician(db.Model):
