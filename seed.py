@@ -1,7 +1,7 @@
 from sqlalchemy import func
 from model import User, Technician, Equipment, Task, Status, AssignStatus
 from model import connect_to_db, db
-from server import app
+from server import app, bcrypt
 from datetime import datetime
 from update_pkey_seqs import update_pkey_seqs
 
@@ -11,10 +11,12 @@ def load_users():
 
     for line in open("seed_data/user_data"):
         line = line.rstrip()
-        user_id, fname, lname, username, email, password, notification = line.split(",")
+        user_id, fname, lname, username, email, password = line.split(",")
+
+        hashed_pw = bcrypt.generate_password_hash(password)
 
         user = User(user_id=user_id, fname=fname, lname=lname, username=username,
-                    email=email, password=password, notification=notification)
+                    email=email, password=hashed_pw)
 
         db.session.add(user)
 

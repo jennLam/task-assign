@@ -83,7 +83,6 @@ def process_register_info():
     uname = request.form.get("uname")
     email = request.form.get("email")
     password = request.form.get("password")
-    notification = request.form.get("notification")
 
     hashed_pw = bcrypt.generate_password_hash(password)
 
@@ -92,12 +91,19 @@ def process_register_info():
 
     # Make new user
     new_user = User(fname=fname, lname=lname, username=uname, email=email,
-                    password=hashed_pw, notification=notification)
+                    password=hashed_pw)
 
     # Check database, add to database
     check_and_add(existing_user, new_user)
 
-    return redirect("/")
+    return redirect(request.referrer)
+
+
+@app.route("/login")
+def show_login_form():
+    """Show login form."""
+
+    return render_template("login.html")
 
 
 @app.route("/login", methods=["POST"])
@@ -116,9 +122,9 @@ def process_login():
 
             return redirect("/")
         else:
-            flash("Incorrect password.")
+            flash("Incorrect password.", "danger")
     else:
-        flash("User does not exist.")
+        flash("User does not exist.", "warning")
 
     return redirect(request.referrer)
 
