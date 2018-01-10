@@ -5,16 +5,16 @@ Task Assign is a web application to help manufacturing leads assign daily tasks 
 
 # Screenshots
 
-![alt text]("/static/taskassignhome.png" "Task Assign")
+![alt text](static/taskassignhome.png "Task Assign")
 This is main page.
 
-![alt text]("/static/taskassignadd.png" "Add Resources")
+![alt text](static/taskassignadd.png "Add Resources")
 This is the user's homepage. The user can add resources and create assignments.
 
-![alt text]("/static/taskassigndetails.png" "Assignment Details")
+![alt text](static/taskassigndetails.png "Assignment Details")
 Click on an assignment to see all the details.
 
-![alt text]("/static/phone.png" "Texts")
+![alt text](static/phone.png "Texts")
 Press the send text button to send assignment details to the technician. The technician can reply to the text to update the assignment status.
 
 ### Tech
